@@ -1,0 +1,91 @@
+"""Django settings for the Kitchen project"""
+import os
+
+DEBUG = <% if node['kitchen']['debug'] %>True<% else %>False<% end %>
+TEMPLATE_DEBUG = DEBUG
+
+BASE_PATH = os.path.abspath(os.path.dirname(__file__))
+
+# Kitchen's settings #
+REPO_BASE_PATH = "<%= node['kitchen']['repo_path'] %>"
+REPO = {
+    'NAME': '<%= node['kitchen']['repo']['name'] %>',
+    'URL': '<%= node['kitchen']['repo']['url'] %>',
+    'SYNC_PERIOD': <%= node['kitchen']['repo']['sync_period'] %>,  # minutes
+    'KITCHEN_SUBDIR': '<%= node['kitchen']['repo']['kitchen_dir'] %>',
+    'EXCLUDE_ROLE_PREFIX': '<%= node['kitchen']['repo']['env_prefix'] %>',
+    'DEFAULT_ENV': '<%= node['kitchen']['repo']['default_env'] %>',
+    'DEFAULT_VIRT': '<%= node['kitchen']['repo']['default_virt'] %>',
+}
+
+COLORS = [
+    "#FCD975", "#9ACEEB", "/blues5/1", "#97CE8A", "#FFA764", "#FBC6FF"
+]
+
+TAG_CLASSES = {<% node['kitchen']['tag_classes'].each do |name, css_class| %>
+    "<%= name %>": "<%= css_class %>",<% end %>
+}
+
+SHOW_VIRT_VIEW = <% if node['kitchen']['show_virt_view'] %>True<% else %>False<% end %>
+SHOW_HOST_NAMES = True
+SHOW_LINKS = True
+
+ENABLE_PLUGINS = [
+<% node['kitchen']['plugins'].each do |plugin| %>
+    '<%= plugin %>',
+<% end %>
+]
+
+LOG_FILE = "<%= node['kitchen']['log_path'] %>/kitchen.log"
+SYNCDATE_FILE = '<%= node['kitchen']['log_path'] %>/kitchen-syncdate'
+###################
+
+ADMINS = ()
+
+MANAGERS = ADMINS
+
+DATABASES = {'default': {}}
+
+MEDIA_ROOT = ''
+MEDIA_URL = ''
+STATIC_ROOT = os.path.join(BASE_PATH, 'dashboard', 'static')
+STATIC_URL = '/static/'
+
+# Additional locations of static files
+STATICFILES_DIRS = ()
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
+
+SECRET_KEY = 'i#5u!2+wpw+sd&@-4p(h4jai7#)r5@^i=sl%_-8-2mb*'
+
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+)
+
+MIDDLEWARE_CLASSES = (
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+)
+
+ROOT_URLCONF = 'kitchen.urls'
+
+TEMPLATE_DIRS = (
+    BASE_PATH + '/templates',
+)
+
+INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    "kitchen.dashboard"
+)

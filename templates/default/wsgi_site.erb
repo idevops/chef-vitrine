@@ -1,0 +1,21 @@
+<VirtualHost *:80>
+    ServerName <%= node['fqdn'] %>
+
+    Alias /static/ <%= node['kitchen']['deploy_path'] %>/current/kitchen/dashboard/static/
+    <Directory <%= node['kitchen']['deploy_path'] %>/current/kitchen/dashboard/>
+        Order deny,allow
+        Allow from all
+    </Directory>
+
+    LogLevel info
+    ErrorLog <%= node['apache']['log_dir'] %>/error.log
+    CustomLog <%= node['apache']['log_dir'] %>/access.log combined
+
+    WSGIScriptAlias / <%= node['kitchen']['deploy_path'] %>/wsgi/webapp.wsgi
+
+    <Directory <%= node['kitchen']['deploy_path'] %>/wsgi>
+        Order deny,allow
+        Allow from all
+    </Directory>
+
+</VirtualHost>
