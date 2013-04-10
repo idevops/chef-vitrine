@@ -31,7 +31,7 @@ SHOW_HOST_NAMES = True
 SHOW_LINKS = True
 
 ENABLE_PLUGINS = [
-<% node['kitchen']['plugins'].each do |plugin| %>
+<% node['kitchen']['plugins']['enable'].each do |plugin| %>
     '<%= plugin %>',
 <% end %>
 ]

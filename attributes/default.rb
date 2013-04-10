@@ -34,7 +34,8 @@ default[:kitchen][:repo][:env_prefix] = "env"
 default[:kitchen][:repo][:default_env] = "production"
 default[:kitchen][:repo][:default_virt] = "guest"
 
-default[:kitchen][:plugins] = []
+default[:kitchen][:plugins][:enable] = ['virt_memory_usage']
+default[:kitchen][:plugins][:install] = []
 
 default[:kitchen][:show_virt_view] = true
 default[:kitchen][:tag_classes] = {

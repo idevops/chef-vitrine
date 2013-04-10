@@ -23,12 +23,17 @@ include_recipe "apache2::mod_wsgi"
 
 package "graphviz"
 
-python_pip pyparsing do
+python_pip "pyparsing" do
   version "1.5.7"
   action :install
 end
 
-%w{django logbook littlechef pydot}.each do |pkg|
+python_pip "littlechef" do
+  version "1.5"
+  action :install
+end
+
+%w{django logbook pydot}.each do |pkg|
   python_pip pkg do
     action :install
   end
@@ -101,7 +106,7 @@ template "#{current_root}/kitchen/settings.py" do
   notifies :restart, "service[apache2]"
 end
 
-node['kitchen']['plugins'].each do |plugin|
+node['kitchen']['plugins']['install'].each do |plugin|
   cookbook_file "#{plugin}.py" do
     path "#{node['kitchen']['deploy_path']}/current/kitchen/backends/plugins/#{plugin}.py"
     owner "www-data"
