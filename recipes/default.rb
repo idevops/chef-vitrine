@@ -23,6 +23,11 @@ include_recipe "apache2::mod_wsgi"
 
 package "graphviz"
 
+python_pip pyparsing do
+  version "1.5.7"
+  action :install
+end
+
 %w{django logbook littlechef pydot}.each do |pkg|
   python_pip pkg do
     action :install
