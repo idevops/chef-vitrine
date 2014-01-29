@@ -24,7 +24,7 @@ default[:kitchen][:log_path] = "/var/log/kitchen"
 default[:kitchen][:debug] = false
 
 default[:kitchen][:revision] = "HEAD"
-default[:kitchen][:source] = "git://github.com/edelight/kitchen.git"
+default[:kitchen][:source] = "git://github.com/idevops/vitrine.git"
 
 default[:kitchen][:repo][:sync_period] = 2
 default[:kitchen][:repo][:name] = "myreponame"
